@@ -1,14 +1,16 @@
 {
   "name": "@tucy/vue3-color",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "private": false,
   "scripts": {
     "dev": "vue-cli-service serve dev/serve.js",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "lib": "vue-cli-service build --target lib --name vue3-color --dest lib src/index.ts"
+    "lib": "vue-cli-service build --target lib --name vue3-color --dest lib src/index.ts",
+    "prepublish": "npm run lib"
   },
+  "types": "src/index.d.ts",
   "main": "lib/vue3-color.common.js",
   "homepage": "https://github.com/tuchongyang/vue3-color",
   "repository": {
