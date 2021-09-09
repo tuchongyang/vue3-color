@@ -13,6 +13,7 @@ import Sketch from "@/components/sketch";
 import Slider from "@/components/slider";
 import Swatches from "@/components/swatches";
 import Twitter from "@/components/twitter";
+import ColorPicker from "@/components/color-picker";
 
 const components = [
   Alpha,
@@ -29,6 +30,7 @@ const components = [
   Slider,
   Swatches,
   Twitter,
+  ColorPicker,
 ];
 
 export {
@@ -47,4 +49,5 @@ export {
   Slider,
   Swatches,
   Twitter,
+  ColorPicker,
 };

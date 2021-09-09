@@ -14,40 +14,39 @@ import Slider from "./components/slider";
 import Swatches from "./components/swatches";
 import Twitter from "./components/twitter";
 
-
 export {
-    Alpha,
-    Checkboard,
-    Chrome,
-    Compact,
-    EditableInput,
-    Grayscale,
-    Hue,
-    Material,
-    Photoshop,
-    Saturation,
-    Sketch,
-    Slider,
-    Swatches,
-    Twitter,
+  Alpha,
+  Checkboard,
+  Chrome,
+  Compact,
+  EditableInput,
+  Grayscale,
+  Hue,
+  Material,
+  Photoshop,
+  Saturation,
+  Sketch,
+  Slider,
+  Swatches,
+  Twitter,
 };
 
 declare const _default: {
-    components,
-    Alpha,
-    Checkboard,
-    Chrome,
-    Compact,
-    EditableInput,
-    Grayscale,
-    Hue,
-    Material,
-    Photoshop,
-    Saturation,
-    Sketch,
-    Slider,
-    Swatches,
-    Twitter,
-}
+  components;
+  Alpha;
+  Checkboard;
+  Chrome;
+  Compact;
+  EditableInput;
+  Grayscale;
+  Hue;
+  Material;
+  Photoshop;
+  Saturation;
+  Sketch;
+  Slider;
+  Swatches;
+  Twitter;
+};
 
-export default _default
+export default _default;

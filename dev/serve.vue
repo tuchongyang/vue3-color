@@ -1,6 +1,11 @@
 <template>
-  <div id="app" :style="{'background-color': typeof colors === 'object' ? colors.hex8 : colors}">
-    <Sketch v-model="colors" @change="onChange"/>
+  <div
+    id="app"
+    :style="{
+      'background-color': typeof colors === 'object' ? colors.hex8 : colors,
+    }"
+  >
+    <Sketch v-model="colors" @change="onChange" />
     <!-- <Chrome v-model="colors"/>
     <Compact v-model="colors"/>
     <Grayscale v-model="colors"/>
@@ -9,31 +14,32 @@
     <Slider v-model="colors"/>
     <Swatches v-model="colors"/>
     <Twitter v-model="colors"/> -->
+    <ColorPicker />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent,ref } from 'vue';
-import { Sketch } from '../src';
+import { defineComponent, ref } from "vue";
+import { Sketch, ColorPicker } from "../src";
+import { ColorInput } from "tinycolor2";
 export default defineComponent({
-  name: 'ServeDev',
-  components:{Sketch},
-  setup(){
-    const colors = ref("#194D33")
-    const onChange = (data)=>{
-      console.log(data.hex)
-      console.log(data.rgba)
-    }
+  name: "ServeDev",
+  components: { Sketch, ColorPicker },
+  setup() {
+    const colors = ref("#194D33");
+    const onChange = (data: ColorInput) => {
+      console.log(data);
+    };
     return {
       colors,
-      onChange
-    }
-  }
+      onChange,
+    };
+  },
 });
 </script>
 
 <style>
-  #app >div {
-    margin: 30px 0;
-  }
+#app > div {
+  margin: 30px 0;
+}
 </style>

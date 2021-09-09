@@ -82,30 +82,33 @@ export default defineComponent({
     modelValue(newVal) {
       let o = newVal;
       if (o.indexOf("rgba") > -1) {
-        const os = o.replace("rgba(", "").replace(")", "").replace(/\s/g, "").split(",");
+        const os = o
+          .replace("rgba(", "")
+          .replace(")", "")
+          .replace(/\s/g, "")
+          .split(",");
         o = {
           r: os[0],
           g: os[1],
           b: os[2],
-          a: os[3]
-        }
+          a: os[3],
+        };
       }
       this.val = _colorChange(o);
-
     },
   },
   methods: {
     colorChange(data: ColorInput, oldHue: number) {
       this.oldHue = this.colors.hsl.h;
       this.colors = _colorChange(data, oldHue || this.oldHue);
-      this.$emit('change', this.colors)
+      this.$emit("change", this.colors);
     },
     isValidHex(hex: string) {
       return tinycolor(hex).isValid();
     },
     getModel() {
-      const rgba = this.val.rgba
-      return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`
+      const rgba = this.val.rgba;
+      return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
     },
     // simpleCheckForValidColor(data) {
     //   const keysToCheck = ["r", "g", "b", "a", "h", "s", "l", "v"];
