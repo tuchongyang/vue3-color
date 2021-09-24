@@ -1,11 +1,11 @@
 <template>
   <div class="vc-color-picker">
-    <div class="picker" @click.stop="show">
+    <div class="picker" ref="pickerRef" @click.stop="show">
       <div class="picker-color" :style="{ backgroundColor: model }"></div>
       <div class="vc-icon-cha" v-if="!model"></div>
       <div class="vc-bg-alpha"></div>
     </div>
-    <div class="picker-panel" @click.stop v-if="visible">
+    <div class="picker-panel" @click.stop v-if="visible" :class="position">
       <Sketch v-model="model" @change="onChange">
         <template v-slot:footer>
           <div class="vc-footer-btns">
@@ -18,8 +18,9 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
 import Sketch from "../sketch";
+import { getPosition } from "./utils";
 
 export default defineComponent({
   components: { Sketch },
@@ -32,8 +33,39 @@ export default defineComponent({
   setup(props, context) {
     const model = ref("");
     const visible = ref(false);
+    const pickerRef = ref({} as HTMLElement);
+    const position = ref(["bottom", "left"]);
+    const calcPosition = () => {
+      const winW = document.body.clientWidth;
+      const winH = document.body.clientHeight;
+      position.value = [];
+      const p = [];
+      if (pickerRef.value) {
+        //判断位置
+        const posi = getPosition(pickerRef.value);
+        if (posi.left < 220) {
+          p.push("left");
+        } else if (posi.left + 30 + 220 > winW) {
+          p.push("right");
+        } else {
+          p.push("left");
+        }
+        if (posi.top < 350) {
+          p.push("bottom");
+        } else if (posi.top > winH - 350) {
+          p.push("top");
+        } else {
+          p.push("bottom");
+        }
+        position.value = p;
+      }
+    };
+    onMounted(() => {
+      calcPosition();
+    });
     const show = () => {
       visible.value = true;
+      calcPosition();
       document.addEventListener("click", () => {
         visible.value = false;
       });
@@ -53,6 +85,8 @@ export default defineComponent({
       show,
       confirm,
       cancel,
+      position,
+      pickerRef,
     };
   },
 });
@@ -80,7 +114,19 @@ export default defineComponent({
 }
 .vc-color-picker .picker-panel {
   position: absolute;
+  z-index: 900;
+}
+.vc-color-picker .picker-panel.bottom {
   top: 100%;
+}
+.vc-color-picker .picker-panel.top {
+  bottom: 100%;
+}
+.vc-color-picker .picker-panel.left {
+  left: 0;
+}
+.vc-color-picker .picker-panel.right {
+  right: 0;
 }
 .vc-color-picker .vc-icon-cha {
   width: 1em;

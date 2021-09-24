@@ -13,6 +13,7 @@ import Sketch from "./components/sketch";
 import Slider from "./components/slider";
 import Swatches from "./components/swatches";
 import Twitter from "./components/twitter";
+import ColorPicker from "./components/color-picker";
 
 export {
   Alpha,
@@ -29,6 +30,7 @@ export {
   Slider,
   Swatches,
   Twitter,
+  ColorPicker,
 };
 
 declare const _default: {
@@ -47,6 +49,7 @@ declare const _default: {
   Slider;
   Swatches;
   Twitter;
+  ColorPicker;
 };
 
 export default _default;
