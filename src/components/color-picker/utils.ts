@@ -1,7 +1,11 @@
 /**
  * 获取一个dom节点的绝对定位，相对于整个document
  */
-export function getPosition(dom: HTMLElement) {
+interface ReturnType {
+  left: number;
+  top: number;
+}
+export function getPosition(dom: HTMLElement): ReturnType {
   let t = dom.offsetTop,
     l = dom.offsetLeft;
   let obj: HTMLElement = dom;

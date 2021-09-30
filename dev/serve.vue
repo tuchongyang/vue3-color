@@ -14,7 +14,11 @@
     <Slider v-model="colors"/>
     <Swatches v-model="colors"/>
     <Twitter v-model="colors"/> -->
-    <ColorPicker />
+    <ColorPicker
+      v-model="colors"
+      @change="onChange"
+      style="left: 80%; top: 50%; position: absolute"
+    />
   </div>
 </template>
 
@@ -28,7 +32,7 @@ export default defineComponent({
   setup() {
     const colors = ref("#194D33");
     const onChange = (data: ColorInput) => {
-      console.log(data);
+      console.log("父级监听change", data);
     };
     return {
       colors,

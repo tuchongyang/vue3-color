@@ -84,13 +84,13 @@ export default defineComponent({
     onChange(param) {
       this.$emit("change", param);
     },
-    handleMouseDown(e) {
+    handleMouseDown() {
       // this.handleChange(e, true)
       window.addEventListener("mousemove", this.handleChange);
       window.addEventListener("mouseup", this.handleChange);
       window.addEventListener("mouseup", this.handleMouseUp);
     },
-    handleMouseUp(e) {
+    handleMouseUp() {
       this.unbindEventListeners();
     },
     unbindEventListeners() {

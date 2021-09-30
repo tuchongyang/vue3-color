@@ -78,7 +78,7 @@ export default defineComponent({
     },
   },
   methods: {
-    isActive(swatch, index) {
+    isActive(swatch) {
       const { hsl } = this.colors;
       if (hsl.l === 1 && swatch.l === 1) {
         return true;

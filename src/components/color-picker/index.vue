@@ -5,25 +5,13 @@
       <div class="vc-icon-cha" v-if="!model"></div>
       <div class="vc-bg-alpha"></div>
     </div>
-    <div class="picker-panel" @click.stop v-if="visible" :class="position">
-      <Sketch v-model="model" @change="onChange">
-        <template v-slot:footer>
-          <div class="vc-footer-btns">
-            <div class="btn btn-text" @click="cancel">取消</div>
-            <div class="btn btn-primary" @click="confirm">确定</div>
-          </div>
-        </template>
-      </Sketch>
-    </div>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import Sketch from "../sketch";
-import { getPosition } from "./utils";
+import { defineComponent, ref } from "vue";
+import pickerPanel from "./pickerPanel";
 
 export default defineComponent({
-  components: { Sketch },
   props: {
     modelValue: {
       type: String,
@@ -32,60 +20,23 @@ export default defineComponent({
   },
   setup(props, context) {
     const model = ref("");
-    const visible = ref(false);
     const pickerRef = ref({} as HTMLElement);
-    const position = ref(["bottom", "left"]);
-    const calcPosition = () => {
-      const winW = document.body.clientWidth;
-      const winH = document.body.clientHeight;
-      position.value = [];
-      const p = [];
-      if (pickerRef.value) {
-        //判断位置
-        const posi = getPosition(pickerRef.value);
-        if (posi.left < 220) {
-          p.push("left");
-        } else if (posi.left + 30 + 220 > winW) {
-          p.push("right");
-        } else {
-          p.push("left");
-        }
-        if (posi.top < 350) {
-          p.push("bottom");
-        } else if (posi.top > winH - 350) {
-          p.push("top");
-        } else {
-          p.push("bottom");
-        }
-        position.value = p;
-      }
-    };
-    onMounted(() => {
-      calcPosition();
-    });
+    const pickerPanelRef = ref();
+
     const show = () => {
-      visible.value = true;
-      calcPosition();
-      document.addEventListener("click", () => {
-        visible.value = false;
+      pickerPanelRef.value = pickerPanel({
+        pickerDom: pickerRef.value,
+        success: (color) => {
+          model.value = color;
+          context.emit("update:modelValue", model.value);
+          context.emit("change", model.value);
+          console.log("success回调", color, model.value);
+        },
       });
-    };
-    const cancel = () => {
-      model.value = props.modelValue;
-      visible.value = false;
-    };
-    const confirm = () => {
-      context.emit("update:modelValue", model.value);
-      visible.value = false;
-      context.emit("change", model.value);
     };
     return {
       model,
-      visible,
       show,
-      confirm,
-      cancel,
-      position,
       pickerRef,
     };
   },
@@ -111,22 +62,6 @@ export default defineComponent({
   height: 16px;
   position: relative;
   z-index: 5;
-}
-.vc-color-picker .picker-panel {
-  position: absolute;
-  z-index: 900;
-}
-.vc-color-picker .picker-panel.bottom {
-  top: 100%;
-}
-.vc-color-picker .picker-panel.top {
-  bottom: 100%;
-}
-.vc-color-picker .picker-panel.left {
-  left: 0;
-}
-.vc-color-picker .picker-panel.right {
-  right: 0;
 }
 .vc-color-picker .vc-icon-cha {
   width: 1em;
@@ -176,23 +111,5 @@ export default defineComponent({
   bottom: 2px;
   z-index: 0;
   text-align: center;
-}
-.vc-footer-btns {
-  text-align: right;
-  padding: 10px 0;
-}
-.vc-footer-btns .btn {
-  display: inline-block;
-  padding: 0 15px;
-  font-size: 12px;
-  cursor: pointer;
-}
-.vc-footer-btns .btn:hover {
-  opacity: 0.9;
-}
-.vc-footer-btns .btn-primary {
-  background: #1684fc;
-  color: #fff;
-  line-height: 24px;
 }
 </style>
